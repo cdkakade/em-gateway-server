@@ -9,6 +9,11 @@ spring:
         locator:
           enabled: true
           lowerCaseServiceId: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI:http://localhost:8074/realms/expense-manager/protocol/openid-connect/certs}
 eureka:
   instance:
     preferIpAddress: true
