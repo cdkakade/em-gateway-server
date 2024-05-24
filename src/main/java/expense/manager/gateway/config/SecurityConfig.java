@@ -16,19 +16,21 @@ import reactor.core.publisher.Mono;
 @EnableWebFluxSecurity
 public class SecurityConfig {
 
-	@Bean
-	public SecurityWebFilterChain filterChain(ServerHttpSecurity http) {
-		http.authorizeExchange(
-				exchanges -> exchanges.pathMatchers("/admin/**").hasRole("ADMIN").anyExchange().authenticated())
-				.oauth2ResourceServer().jwt().jwtAuthenticationConverter(grantedAuthoritiesExtractor());
-		http.csrf().disable();
-		return http.build();
-	}
+    @Bean
+    public SecurityWebFilterChain filterChain(ServerHttpSecurity http) {
+        http.authorizeExchange(exchanges -> exchanges
+                        .pathMatchers("/admin/**").hasRole("ADMIN")
+                        .pathMatchers("/openapi/**").permitAll()
+                        .anyExchange().authenticated())
+                .oauth2ResourceServer().jwt().jwtAuthenticationConverter(grantedAuthoritiesExtractor());
+        http.csrf().disable();
+        return http.build();
+    }
 
-	Converter<Jwt, Mono<AbstractAuthenticationToken>> grantedAuthoritiesExtractor() {
-		JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
-		jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(new KeycloakRoleConverter());
-		return new ReactiveJwtAuthenticationConverterAdapter(jwtAuthenticationConverter);
-	}
+    Converter<Jwt, Mono<AbstractAuthenticationToken>> grantedAuthoritiesExtractor() {
+        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(new KeycloakRoleConverter());
+        return new ReactiveJwtAuthenticationConverterAdapter(jwtAuthenticationConverter);
+    }
 
 }
