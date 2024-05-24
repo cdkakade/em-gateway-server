@@ -1,0 +1,15 @@
+server:
+  port: 8071
+logging:
+  level:
+    expense:
+      manager:
+        gateway: DEBUG
+    org:
+      springframework:
+        cloud:
+          gateway: DEBUG
+    reactor:
+      netty:
+        http:
+          client: DEBUG

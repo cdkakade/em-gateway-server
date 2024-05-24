@@ -5,7 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 
-@Component
+//@Component
 public class FilterUtility {
 
 	public String getCorrelationId(HttpHeaders requestHeaders) {

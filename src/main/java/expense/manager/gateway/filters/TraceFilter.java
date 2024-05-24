@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-@Order(1)
-@Component
+//@Order(1)
+//@Component
 public class TraceFilter implements GlobalFilter {
 
 	private static final Logger logger = LoggerFactory.getLogger(TraceFilter.class);
