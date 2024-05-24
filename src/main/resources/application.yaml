@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: @project.name@
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8085/eureka/}
+    registerWithEureka: true
+    fetchRegistry: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+  endpoint:
+    gateway:
+      enabled: true
+info:
+  app:
+    name: @project.name@
+    description: @project.description@
+    version: @project.version@
+logging:
+  level:
+    expense:
+      manager:
+        gateway: DEBUG
