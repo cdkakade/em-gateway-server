@@ -19,7 +19,7 @@ public class GatewayServerApplication {
 				.route(p -> p.path("/wallets/**")
 						.filters(f -> f.rewritePath("/currencies/(?<segment>.*)", "/${segment}"))
 						.uri("lb://WALLET-SERVICE"))
-				.route(p -> p.path("/openapi/swagger-ui/**")
+				.route(p -> p.path("/swagger-ui/**")
 						.filters(f -> f.rewritePath("/currencies/(?<segment>.*)", "/${segment}"))
 						.uri("lb://CURRENCY-SERVICE"))
 				.route(p -> p.path("/openapi/wallets-doc/**").or().query("urls.primaryName", "^wallet")
