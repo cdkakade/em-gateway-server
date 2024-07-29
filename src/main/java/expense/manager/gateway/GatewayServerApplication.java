@@ -19,10 +19,10 @@ public class GatewayServerApplication {
 	public RouteLocator myRoutes(RouteLocatorBuilder builder) {
 		return builder.routes().route(p -> p.path("/currencies/**").uri("lb://CURRENCY-SERVICE"))
 				.route(p -> p.path("/wallets/**")
-						.filters(f -> f.rewritePath("/currencies/(?<segment>.*)", "/${segment}"))
+						//.filters(f -> f.rewritePath("/currencies/(?<segment>.*)", "/${segment}"))
 						.uri("lb://WALLET-SERVICE"))
 				.route(p -> p.path("/swagger-ui/**")
-						.filters(f -> f.rewritePath("/currencies/(?<segment>.*)", "/${segment}"))
+						//.filters(f -> f.rewritePath("/currencies/(?<segment>.*)", "/${segment}"))
 						.uri("lb://CURRENCY-SERVICE"))
 				.route(p -> p.path("/openapi/wallets-doc/**").or().query("urls.primaryName", "^wallet")
 						.uri("lb://WALLET-SERVICE"))

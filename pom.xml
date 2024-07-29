@@ -17,6 +17,7 @@
 		<java.version>17</java.version>
 		<spring-cloud.version>2023.0.0</spring-cloud.version>
 		<common.utils.version>1.0.0-SNAPSHOT</common.utils.version>
+		<openapi.version>2.6.0</openapi.version>
 	</properties>
 	<dependencies>
 		<dependency>
