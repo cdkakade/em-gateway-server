@@ -33,6 +33,13 @@ public class GatewayServerApplication {
                             return f;
                         })
                         .uri("lb://WALLET-SERVICE"))
+                .route("transaction-service", p -> p.path("/transactions/**")
+                        .filters(f -> {
+                            f.tokenRelay();
+                            f.removeRequestHeader(HttpHeaders.COOKIE);
+                            return f;
+                        })
+                        .uri("lb://TRANSACTION-SERVICE"))
                 .route(p -> p.path("/swagger-ui/**")
                         .uri("lb://CURRENCY-SERVICE"))
                 .route(p -> p.path("/openapi/wallets-doc/**")
@@ -43,6 +50,10 @@ public class GatewayServerApplication {
                         .or()
                         .query("urls.primaryName", "^currency")
                         .uri("lb://CURRENCY-SERVICE"))
+                .route(p -> p.path("/openapi/transactions-doc/**")
+                        .or()
+                        .query("urls.primaryName", "^transaction")
+                        .uri("lb://TRANSACTION-SERVICE"))
                 .build();
     }
 
