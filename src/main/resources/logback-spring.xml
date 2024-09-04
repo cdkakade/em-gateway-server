@@ -5,21 +5,27 @@
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>
-                %d{HH:mm:ss.SSS} %-5level %logger{36} %X{X-Request-ID} - %msg%n
+                %d{yyyy-MM-dd HH:mm:ss.SSS} [%X{traceId:-}] [%X{spanId:-}] %-5level %logger{36} - %msg%n
             </pattern>
         </encoder>
     </appender>
 
     <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
         <http>
-            <url>http://loki.my-grafana.svc.cluster.local:3100/loki/api/v1/push</url>
+            <url>http://loki-gateway.my-grafana.svc.cluster.local/loki/api/v1/push</url>
+            <tenantId>expense-manager</tenantId>
         </http>
+
         <format>
             <label>
-                <pattern>application=${appName},host=${HOSTNAME},traceID=%X{traceId:-NONE},level=%level</pattern>
+                <pattern>
+                    application=${appName},host=${HOSTNAME},traceID=%X{traceId:-NONE},spanId=%X{spanId:-NONE},level=%level
+                </pattern>
             </label>
             <message>
-                <pattern>${FILE_LOG_PATTERN}</pattern>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%X{traceId:-}] [%X{spanId:-}] %-5level %logger{36} -
+                    %msg%n
+                </pattern>
             </message>
             <sortByTime>true</sortByTime>
         </format>
@@ -34,6 +40,8 @@
     <springProfile name="default">
         <root level="INFO">
             <appender-ref ref="LOKI"/>
+            <appender-ref ref="CONSOLE"/>
         </root>
     </springProfile>
+
 </configuration>
