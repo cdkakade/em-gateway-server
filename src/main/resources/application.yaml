@@ -41,14 +41,6 @@ info:
 
 logging:
   level:
-    expense:
-      manager:
-        gateway: DEBUG
     org:
-      springframework:
-        cloud:
-          gateway: DEBUG
-    reactor:
-      netty:
-        http:
-          client: DEBUG
+      zalando:
+        logbook: TRACE
