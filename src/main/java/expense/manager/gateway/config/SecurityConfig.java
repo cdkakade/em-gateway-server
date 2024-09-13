@@ -21,12 +21,13 @@ public class SecurityConfig {
     public SecurityWebFilterChain filterChain(ServerHttpSecurity http) {
         http.authorizeExchange(exchanges -> exchanges
                         .pathMatchers("/admin/**").hasRole("ADMIN")
-                        .pathMatchers("/openapi/**","/swagger-ui/**").permitAll()
+                        .pathMatchers("/openapi/**", "/swagger-ui/**").permitAll()
                         .anyExchange().authenticated())
                 .oauth2ResourceServer(oauth2 -> {
-                    oauth2.jwt(Customizer.withDefaults());
+                    oauth2.jwt(jwtConfig -> {
+                        jwtConfig.jwtAuthenticationConverter(grantedAuthoritiesExtractor());
+                    });
                 });
-        //.oauth2ResourceServer().jwt().jwtAuthenticationConverter(grantedAuthoritiesExtractor());
         http.csrf(ServerHttpSecurity.CsrfSpec::disable);
         return http.build();
     }
